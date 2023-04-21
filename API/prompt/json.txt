@@ -1,0 +1,15 @@
+name: { question: ,
+     answer:  ,
+     length:  from: to: ,
+},
+name: {
+    question:   ,
+    available_answers:  ,
+    num_answers:   ,
+    answers: [
+        {
+            answer:
+            description:
+        }
+    ]
+}
