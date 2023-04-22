@@ -5,10 +5,6 @@ from flask_cors import CORS
 
 import os
 
-from openai_api.langchain import OpenAIAPI
-
-os.environ["OPENAI_API_KEY"] = "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"
-
 from common.logger import Logger
 from endpoints.input import InputCollector
 

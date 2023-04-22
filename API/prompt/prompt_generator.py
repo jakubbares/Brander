@@ -1,11 +1,11 @@
-from openai_api.langchain import OpenAIAPI
+from api.openai import OpenAIAPI
 
 
 class PromptGenerator:
     def __init__(self):
         self.api = OpenAIAPI()
     @property
-    def system_template(self):
+    def brand_context_template(self):
         return """Insight: {insight}
         Vision: {vision}
         Mission: {mission}
@@ -18,7 +18,7 @@ class PromptGenerator:
         Communication pillars: {communication_pillars}
         """
 
-    def generate_response(self, human_template, input_parameters):
+    def generate_brand_context_response(self, human_template, input_parameters):
         input_parameters = {
             "insight": "Followers of the president are happy that the president is already someone who represents the country so none has to be ashamed.",
             "vision": "I want to make Czech republic ambitious and confident country where the people want to live in.",
@@ -30,6 +30,14 @@ class PromptGenerator:
             "tone_of_voice": "formal, deliberate, respectful, matter-of-fact",
             "characteristics": "Trustworthy, professional, pragmatic, smart, patient, conventional",
             "communication_pillars": "politics, presidential agenda, motivational speeches"
-        }
-        return self.api.chat_prompt_response(system_template=self.system_template, human_template=human_template, **input_parameters)
+        } if input_parameters is None else input_parameters
+        return self.api.chat_prompt_response(system_template=self.brand_context_template, human_template=human_template, **input_parameters)
+
+    def generate_analysis_response(self, human_template, posts):
+        joined_posts = ".\n".join(posts)
+        analysis_template = """
+        Posts: 
+        {joined_posts}    
+        """
+        return self.api.chat_prompt_response(system_template=analysis_template, human_template=human_template, joined_posts=joined_posts)
 

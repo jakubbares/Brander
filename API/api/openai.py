@@ -1,7 +1,10 @@
+from langchain.document_loaders import DirectoryLoader
+from langchain.embeddings import OpenAIEmbeddings
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain import LLMChain
 from langchain.prompts.chat import (
     ChatPromptTemplate,
@@ -9,16 +12,13 @@ from langchain.prompts.chat import (
     HumanMessagePromptTemplate,
 )
 
-
-from typing import List, Dict
-
 class OpenAIAPI:
     def __init__(self):
         self.llm = OpenAI(temperature=0.9)
         self.chat_model = ChatOpenAI(temperature=0)
 
     def basic_prompt_response(self, prompt: str):
-            return self.llm(prompt)
+        return self.llm(prompt)
 
     def formatted_prompt_response(self, prompt: PromptTemplate, **inputs):
         chain = LLMChain(llm=self.llm, prompt=prompt)
