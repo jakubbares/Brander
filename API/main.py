@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 import os
 
-from API.openai_api.langchain import OpenAIAPI
+from openai_api.langchain import OpenAIAPI
 
 os.environ["OPENAI_API_KEY"] = "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"
 
@@ -29,5 +29,4 @@ if __name__ == "__main__":
 
     app.run(host='0.0.0.0', port=5000)
 
-    res = OpenAIAPI().prompt_response("What is a good name for a company that makes Coke?")
-    print(res)
+
