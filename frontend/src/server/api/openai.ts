@@ -1,6 +1,6 @@
 import { OpenAI } from "langchain/llms/openai";
 
-const model = new OpenAI({ openAIApiKey: "sk-...", temperature: 0.9 });
+const model = new OpenAI({ openAIApiKey: "sk-...", temperature: 0.9, modelName: "gpt-4" });
 
 const context = `
     Hey, try to imagine you are the president of the Czech Republic Petr Pavel and you are writing the post about <<VARIABLE>>. Now you are writing the post about it on Facebook. The post length is between 50 to 100 words. Write it according to all these specifications but do not express them explicitly. Take into account mainly his tone of voice, personality and characteristics but again do not express them explicitly just behave accordingly. Just act accordingly:
