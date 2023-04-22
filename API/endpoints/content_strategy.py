@@ -43,9 +43,9 @@ class ContentStrategy(Resource):
         args = self.parser.parse_args()
         # Do something with the arguments (e.g., authenticate the user)
         input_parameters = args['input_parameters_json'] if args['input_parameters_json'] else {}
-        analysis = self.analysis.process()
-        parameters = {**input_parameters, **analysis}
-        print(parameters)
+        #analysis = self.analysis.process()
+        #parameters = {**input_parameters, **analysis}
+        #print(parameters)
         #TODO Add self.paramters to function below
         print("////")
         print(args["human_template"])
