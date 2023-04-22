@@ -14,8 +14,8 @@ from langchain.prompts.chat import (
 
 class OpenAIAPI:
     def __init__(self):
-        self.llm = OpenAI(temperature=0.9)
-        self.chat_model = ChatOpenAI(temperature=0)
+        self.llm = OpenAI(temperature=0, model_name="gpt-4-32k-0314")
+        self.chat_model = ChatOpenAI(temperature=0, model_name="gpt-4-32k-0314")
 
     def basic_prompt_response(self, prompt: str):
         return self.llm(prompt)
