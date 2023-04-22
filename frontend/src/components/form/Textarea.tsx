@@ -21,7 +21,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
 
     // const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const handleOnChange = (newText: string) => {
-        const nWords = countWords(newText);
+        const nWords = newText.length > 0 ? countWords(newText) : 0;
 
         setText(newText);
         setWordCount(nWords);

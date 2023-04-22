@@ -1,15 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import BaseQuestion from "~/components/questions/BaseQuestion";
-import TextQuestion from "~/components/questions/TextQuestion";
-import CheckboxListItem from "~/components/form/CheckboxListItem";
-import ExtendedCheckboxListItem from "~/components/form/ExtendedCheckboxListItem";
-import { useState } from "react";
-
-interface FormData {
-  [age: string]: string[];
-}
 
 const Home: NextPage = () => {
 
@@ -20,137 +10,74 @@ const Home: NextPage = () => {
         <meta name="description" content="Brander app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <CheckboxColsPageContent /> */}
-      <TextPageContent />
-      {/* <ExtendedCheckboxesPageContent /> */}
+      
 
-      {/* <main className="flex min-h-screen flex-col items-center justify-center">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-            <TextQuestion />
+      <div className="min-h-screen mx-auto px-2 pt-2 bg-gradient bg-cover flex flex-col">
+        <div className="text-center basis-1/4 h-auto py-5">
+          <h1 className="text-6xl font-bold mb-2">Brander</h1>
+          <p className="text-light">Ver 1.0</p>
         </div>
-      </main> */}
+        {/* <Toaster position="bottom-center" reverseOrder={false} /> */}
+        <main className="grow flex flex-col justify-end items-center">
+          <div className="w-full max-w-4xl m-3">
+
+            <ChatMessage author={ChatMessageAuthor.System}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+            </ChatMessage>
+
+            <ChatMessage author={ChatMessageAuthor.User}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+            </ChatMessage>
+
+            <ChatInput />
+
+          </div>
+        </main>
+      </div>
     </>
   );
 };
 
 export default Home;
 
+const ChatInput: React.FC = () => {
 
-type CheckboxColumnProps = {
-  children: React.ReactNode;
-  title: string;
-}
-
-const CheckboxColumn: React.FC<CheckboxColumnProps> = (props) => {
   return (
-    <>
+    <div className="flex flex-row items-center justify-center gap-4 border-2 border-light rounded-lg w-full bg-base-100">
+
       <div className="grow">
-        <div className="text-2xl font-semibold">
-          {props.title}
-        </div>
-        <div>
-          {props.children}
-        </div>
+        <textarea className="textarea w-full text-lg py-3 h-14" placeholder="Type your message here"></textarea>
       </div>
-    </>
+      <div>
+        <button className="btn btn-ghost mr-3">Send</button>
+      </div>
+    </div>
   )
+
 }
 
-const TextPageContent: React.FC = () => {
+enum ChatMessageAuthor {
+  System,
+  User
+}
+
+type ChatMessageProps = {
+  children: React.ReactNode;
+  author: ChatMessageAuthor
+}
+
+const ChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) => {
+
+  const wrapperClass = props.author === ChatMessageAuthor.System ? " justify-self-start float-left" : " justify-self-end float-right";
 
   return (
     <>
-      <TextQuestion questionNumber={1} label="Can you please describe the primary problem or challenge your customers are currently facing?" footnote="Max. 100 words">.</TextQuestion>
+      <div className={"text-lg rounded-lg w-10/12 bg-neutral-content my-3 p-3 shadow" + wrapperClass}>
+        <p>
+          {props.children}
+        </p>
+      </div> 
     </>
-  );
-
-}
-
-const CheckboxColsPageContent: React.FC = () => {
-
-  const [formData, setFormData] = useState<FormData>({
-    age: []
-  });
-
-  const handleCheckboxItemChecked = (name: string, isChecked: boolean, value: string) => {
-    const updatedFormData: FormData = formData;
-
-    if (isChecked) {
-
-      updatedFormData[name]?.push(value);
-      setFormData(updatedFormData);
-
-    } else {
-
-      const updatedCheckboxList = updatedFormData[name]?.filter((item: string) => item !== value);
-
-      if (updatedCheckboxList) {
-        updatedFormData[name] = updatedCheckboxList;
-      }
-
-      setFormData(updatedFormData);
-    }
-  }
-
-
-  return (
-
-      <BaseQuestion questionNumber={2} label="Can you please describe the primary problem or challenge your customers are currently facing?">
-        <div className="flex flex-row w-full">
-            <CheckboxColumn title="Age">
-              <CheckboxListItem name="age" label="18-24" id="age-1" isChecked={false} onItemChecked={handleCheckboxItemChecked} />
-              <CheckboxListItem name="age" label="25-30" id="age-2" isChecked={false} onItemChecked={handleCheckboxItemChecked} />
-              <CheckboxListItem name="age" label="31-35" id="age-3" isChecked={false} onItemChecked={handleCheckboxItemChecked} />
-            </CheckboxColumn>
-            <CheckboxColumn title="Age">
-              <CheckboxListItem name="age2" label="18-24" id="age2-1" isChecked={false} onItemChecked={handleCheckboxItemChecked} />
-            </CheckboxColumn>
-            <CheckboxColumn title="Location">
-              <input type="checkbox" className="checkbox" />
-            </CheckboxColumn>
-            <CheckboxColumn title="Need">
-              <input type="checkbox" className="checkbox" />
-            </CheckboxColumn>
-            <CheckboxColumn title="Motivation">
-              <input type="checkbox" className="checkbox" />
-            </CheckboxColumn>
-        </div>
-      </BaseQuestion>
   )
-}
 
-const ExtendedCheckboxesPageContent: React.FC = () => {
-
-  return (
-    <BaseQuestion questionNumber={3} label="Can you please describe the primary problem or challenge your customers are currently facing?">
-
-      <div className="flex">
-
-        <div className="flex-grow">
-          <ExtendedCheckboxListItem name="age" label="18-24" id="age-1" isChecked={false} onItemChecked={() => {}}>
-            Brands that are reliable, efficient, and effective. They are often associated with qualities such as intelligence, professionalism, and expertise.
-          </ExtendedCheckboxListItem>
-          <ExtendedCheckboxListItem name="age" label="18-24" id="age-1" isChecked={false} onItemChecked={() => {}}>
-            Brands that are reliable, efficient, and effective. They are often associated with qualities such as intelligence, professionalism, and expertise.
-          </ExtendedCheckboxListItem>
-          <ExtendedCheckboxListItem name="age" label="18-24" id="age-1" isChecked={false} onItemChecked={() => {}}>
-            Brands that are reliable, efficient, and effective. They are often associated with qualities such as intelligence, professionalism, and expertise.
-          </ExtendedCheckboxListItem>
-        </div>
-
-        <div className="flex-grow">
-          <ExtendedCheckboxListItem name="age" label="25-30" id="age-2" isChecked={false} onItemChecked={() => {}}>
-            Brands that are reliable, efficient, and effective. They are often associated with qualities such as intelligence, professionalism, and expertise.
-          </ExtendedCheckboxListItem>
-          <ExtendedCheckboxListItem name="age" label="25-30" id="age-2" isChecked={false} onItemChecked={() => {}}>
-            Brands that are reliable, efficient, and effective. They are often associated with qualities such as intelligence, professionalism, and expertise.
-          </ExtendedCheckboxListItem>
-          <ExtendedCheckboxListItem name="age" label="25-30" id="age-2" isChecked={false} onItemChecked={() => {}}>
-            Brands that are reliable, efficient, and effective. They are often associated with qualities such as intelligence, professionalism, and expertise.
-          </ExtendedCheckboxListItem>
-        </div>
-      </div>
-
-    </BaseQuestion>
-  )
 }

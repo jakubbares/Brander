@@ -1,3 +1,4 @@
 *.pyc
 data
 foxino-server.iml
+env
