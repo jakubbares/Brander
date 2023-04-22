@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 
 import axios from "axios";
-import MainLayout from "~/components/layout/MainLayout";
+import FormLayout from "~/components/layout/FormLayout";
 
 
 const ApiTest: NextPage = () => {
@@ -30,9 +30,9 @@ const ApiTest: NextPage = () => {
       <Head>
         <title>Brander - API test</title>
       </Head>
-      <MainLayout>
+      <FormLayout>
         <button className="btn btn-primary" onClick={handleOnClick}>Test API</button>
-      </MainLayout>
+      </FormLayout>
     </>
   );
 };

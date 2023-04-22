@@ -16,13 +16,15 @@ const context = `
     Communication pillars: politics, presidential agenda, motivational speeches
     Never use hashtags.
     Translate it to Czech
-`
-async function generateResponse(prompt) {
-    const res = await model.complete({
-        prompt: context.replace("<<VARIABLE>>", prompt),
-        temperature: 0,
-    });
-    console.log(res.choices[0].text);
-    return res
-}
+// `
+// async function generateResponse(prompt) {
+//     const res = await model.complete({
+//         prompt: context.replace("<<VARIABLE>>", prompt),
+//         temperature: 0,
+//     });
+//     console.log(res.choices[0].text);
+//     return res
+// }
 
+
+// export { generateResponse };

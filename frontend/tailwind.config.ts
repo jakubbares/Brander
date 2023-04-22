@@ -8,6 +8,7 @@ export default {
     },
     colors: {
       light: "#575757",
+      lighter: "#B9AFAF"
     },
     extend: {
         backgroundImage: {

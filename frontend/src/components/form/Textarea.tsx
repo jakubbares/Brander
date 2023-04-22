@@ -5,7 +5,8 @@ interface TextareaProps {
     name: string;
     onChange: (value: string) => void;
     maxWordsCount?: number;
-    footnote?: string;
+    placeholder?: string;
+    
 }
 
 const Textarea: React.FC<TextareaProps> = (props) => {
@@ -42,9 +43,9 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     return (
         <>
             <textarea
-                placeholder="Type here"
+                placeholder={props.placeholder}
                 name={props.name}
-                className="textarea textarea-bordered w-full text-lg h-80 py-3"
+                className="textarea w-full text-lg h-80 py-3 bg-base-100 shadow-md"
                 onChange={(e) => handleOnChange(e.target.value)}></textarea>
             {props.maxWordsCount && (
                 <label className="label w-full">
