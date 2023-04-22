@@ -9,8 +9,8 @@ from langchain.prompts.chat import (
     HumanMessagePromptTemplate,
 )
 
-
 from typing import List, Dict
+
 
 class OpenAIAPI:
     def __init__(self):
@@ -18,7 +18,7 @@ class OpenAIAPI:
         self.chat_model = ChatOpenAI(temperature=0)
 
     def basic_prompt_response(self, prompt: str):
-            return self.llm(prompt)
+        return self.llm(prompt)
 
     def formatted_prompt_response(self, prompt: PromptTemplate, **inputs):
         chain = LLMChain(llm=self.llm, prompt=prompt)
@@ -30,5 +30,3 @@ class OpenAIAPI:
         chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
         chain = LLMChain(llm=self.chat_model, prompt=chat_prompt)
         return chain.run(**inputs)
-
-
