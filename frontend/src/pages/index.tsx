@@ -1,7 +1,25 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
+import Textarea from "~/components/form/Textarea";
+import FormLayout from "~/components/layout/FormLayout";
+import PageHeader from "~/components/layout/PageHeader";
+
+import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
+
+  const { data: generatedPostContent, isLoading: ticketTypesLoading } = api.example.hello.useQuery({
+    text: "Prompt should be here"
+  });
+
+  const [text, setText] = useState<string>('');
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+
+  const handleGenerationRequest = (prompt: string) => {
+    setText(prompt);
+    setIsGenerating(true);
+  };
 
   return (
     <>
@@ -10,28 +28,19 @@ const Home: NextPage = () => {
         <meta name="description" content="Brander app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <PageHeader />
       
-
       <div className="min-h-screen mx-auto px-2 pt-2 bg-gradient bg-cover flex flex-col">
-        <div className="text-center basis-1/4 h-auto py-5">
-          <h1 className="text-6xl font-bold mb-2">Brander</h1>
-          <p className="text-light">Ver 1.0</p>
-        </div>
-        {/* <Toaster position="bottom-center" reverseOrder={false} /> */}
-        <main className="grow flex flex-col justify-end items-center">
-          <div className="w-full max-w-4xl m-3">
+        <main className="grow flex flex-col justify-center items-center">
+          {!isGenerating && (
+            <PostGenRequest onPostGen={handleGenerationRequest} />
+          )}
 
-            <ChatMessage author={ChatMessageAuthor.System}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-            </ChatMessage>
-
-            <ChatMessage author={ChatMessageAuthor.User}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-            </ChatMessage>
-
-            <ChatInput />
-
-          </div>
+          {generatedPostContent && (<div>{generatedPostContent.greeting}</div>)}
+          {isGenerating && ( 
+            <PostGenResult />
+          )}
         </main>
       </div>
     </>
@@ -40,44 +49,45 @@ const Home: NextPage = () => {
 
 export default Home;
 
-const ChatInput: React.FC = () => {
+type PostGenRequestParams = {
+  onPostGen: (post: string) => void;
+}
 
+const PostGenRequest = (params: PostGenRequestParams) => {
+
+  const handleOnClick = () => {
+    console.log("clicked");
+    params.onPostGen("post");
+  };
+  
   return (
-    <div className="flex flex-row items-center justify-center gap-4 border-2 border-light rounded-lg w-full bg-base-100">
+    <div className="w-full max-w-4xl min-h-[60vh] m-3 text-center flex flex-col justify-between items-center">
+      <h1 className="text-7xl font-bold">What kind of post would you like to generate?</h1>
 
-      <div className="grow">
-        <textarea className="textarea w-full text-lg py-3 h-14" placeholder="Type your message here"></textarea>
-      </div>
-      <div>
-        <button className="btn btn-ghost mr-3">Send</button>
-      </div>
+      <Textarea placeholder="Example: Please, generate me a viral Facebook post that will increase interest in my page by people from Brno." name="input" onChange={(val) => {console.log(val)}} />
+
+      <button className="btn bg-black rounded-full text-4xl h-auto p-3 bg-black max-w-2xl w-full" onClick={handleOnClick}>🚀</button>
     </div>
   )
-
 }
 
-enum ChatMessageAuthor {
-  System,
-  User
-}
 
-type ChatMessageProps = {
-  children: React.ReactNode;
-  author: ChatMessageAuthor
-}
-
-const ChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) => {
-
-  const wrapperClass = props.author === ChatMessageAuthor.System ? " justify-self-start float-left" : " justify-self-end float-right";
-
+const PostGenResult = () => {
   return (
-    <>
-      <div className={"text-lg rounded-lg w-10/12 bg-neutral-content my-3 p-3 shadow" + wrapperClass}>
-        <p>
-          {props.children}
-        </p>
-      </div> 
-    </>
-  )
+    <div className="w-full max-w-4xl min-h-[60vh] m-3 text-center flex flex-col justify-between items-center">
+      <div>
+        <h1 className="text-7xl font-bold mb-5">Here you go, Petr! 😎</h1>
+        <p className="text-4xl font-medium">Some AI joke on the post</p>
+      </div>
 
+
+      <div className="card w-full bg-base-100 shadow-md rounded-md">
+        <div className="card-body text-[1.25rem] font-bold">
+          <p>No offence, Prague guys and girls, but Brno is just... special 😜 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet  Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet </p>
+        </div>
+      </div>
+
+      <button className="btn bg-black rounded-full text-4xl h-auto p-3 bg-black max-w-2xl w-full capitalize bg-[#000]"><span className="text-2xl inline-block pr-3">Regenerate</span> 🚀</button>
+    </div>
+  )
 }
