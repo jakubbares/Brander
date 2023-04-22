@@ -10,9 +10,10 @@ import httpx
 User_Email = "pepebotellah@gmail.com"
 User_Password = "Superadmin1"
 target_FB_account = "https://www.facebook.com/prezidentpavel"
-number_prompt = 3
+number_prompt = 30
+Name_Target = "Petr Pavel"
 
-# Set up the web driver for Mozilla Firefox
+# Set up the web driver for Chrome
 driver = webdriver.Chrome()
 driver.get("https://www.facebook.com")
 driver.maximize_window()
@@ -27,10 +28,11 @@ password = driver.find_element(By.ID, "pass")
 password.send_keys(User_Password)
 password.send_keys(Keys.ENTER)
 
-
 # Navigate to the user's profile page
-time.sleep(3)  # Wait for the page to load
+time.sleep(2)  # Wait for the page to load
 driver.get(target_FB_account)
+time.sleep(1)  # Wait for the page to load
+
 
 # Scroll down the page to load more posts
 SCROLL_PAUSE_TIME = 2
@@ -44,33 +46,44 @@ while len(driver.find_elements(By.CSS_SELECTOR, 'div[data-ad-comet-preview="mess
     last_height = new_height
 
 # Scrape the latest number_prompt public posts
-posts = driver.find_elements(By.CSS_SELECTOR, 'div[data-ad-comet-preview="message"]')[:number_prompt]
+posts = driver.find_elements(By.CSS_SELECTOR, 'div[data-ad-preview="message"]')[:number_prompt]
 public_posts = [post.text for post in posts]
 
 print(public_posts)
 
 # Translate the posts to English
-translator = Translator(service_urls=['translate.google.com'])
+translator = Translator()
 translated_posts = []
 timeout = httpx.Timeout(60.0)  # 60 seconds timeout
 for post in public_posts:
     try:
-        translated_post = translator.translate(post, dest='en')
-        if translated_post is not None and translated_post.text is not None:
-            translated_posts.append(translated_post.text)
+        translated_post = translator.translate(post, dest='en').text
+        if translated_post is not None:
+            translated_posts.append(translated_post)
         else:
             print(f"Translation of '{post}' failed.")
     except Exception as e:
         print(f"Translation of '{post}' failed with error: {str(e)}.")
 
+
 # Print the translated posts
 print(translated_posts)
 
+# Create a dictionary with the translated posts
+key = Name_Target
+posts_dict = {key: translated_posts}
+
+# Print the dictionary
+print(posts_dict)
+
 file_path = "../data/new_FB_posts.json"
 
-# Save the translated posts to a JSON file
-with open(file_path, "w") as file:
-    json.dump(translated_posts, file)
+# Save the dictionary to a JSON file
+if len(translated_posts) > 0:  # check if there are translated posts
+    with open(file_path, "w") as file:
+        json.dump(posts_dict, file)
+else:
+    print("No translated posts to save.")
 
 # Close the web driver
 driver.quit()
