@@ -12,7 +12,7 @@ analysis = PostAnalysis()
 api  = OpenAIAPI()
 res = api.basic_prompt_response(TEST_PROMPT_FULL)
 print(res)
-
+print(1000)
 #res = generator.generate_brand_context_response(input_parameters=None, human_template="Write me a post about buying a big mac")
 #print(res)
 
