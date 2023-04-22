@@ -8,7 +8,7 @@ import os
 from prompt.prompt_generator import PromptGenerator
 
 generator = PromptGenerator()
-analysis = PostAnalysis()
+#analysis = PostAnalysis()
 api  = OpenAIAPI()
 res = api.basic_prompt_response(TEST_PROMPT_FULL)
 print(res)
