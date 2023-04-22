@@ -26,9 +26,11 @@ class OpenAIAPI:
 
     def chat_prompt_response(self, system_template: str, human_template: str, **inputs):
         system_message_prompt = SystemMessagePromptTemplate.from_template(system_template)
+        print(system_message_prompt)
         human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
         chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
         chain = LLMChain(llm=self.chat_model, prompt=chat_prompt)
-        return chain.run(**inputs)
+        print(inputs)
+        return chain.run(inputs)
 
 

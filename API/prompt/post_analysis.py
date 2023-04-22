@@ -15,8 +15,9 @@ class PostAnalysis:
         """
 
     def process(self):
-        topics = self.extract_topics()
-        print(topics)
+        return {
+            "topics": self.extract_topics()
+        }
 
     def extract_topics(self):
         return self.generator.generate_analysis_response(human_template=self.human_template, posts=self.posts)

@@ -30,7 +30,7 @@ class PromptGenerator:
             "tone_of_voice": "formal, deliberate, respectful, matter-of-fact",
             "characteristics": "Trustworthy, professional, pragmatic, smart, patient, conventional",
             "communication_pillars": "politics, presidential agenda, motivational speeches"
-        } if input_parameters is None else input_parameters
+        } if not len(input_parameters) else input_parameters
         return self.api.chat_prompt_response(system_template=self.brand_context_template, human_template=human_template, **input_parameters)
 
     def generate_analysis_response(self, human_template, posts):
