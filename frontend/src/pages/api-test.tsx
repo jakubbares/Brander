@@ -11,13 +11,8 @@ const ApiTest: NextPage = () => {
 
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:5000/brander/content_strategy',
-      // params: {
-      //   input_parameters_json: "{}",
-      //   human_template: 'John Doe',
-      // }
+      url: 'http://localhost:5000/brander/content_strategyzzzzzz',
       data: {
-        input_parameters_json: "{}",
         human_template: 'John Doe',
       }
     });
