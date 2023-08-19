@@ -11,37 +11,25 @@ Welcome to the Brand Identity Manager repository! This is a comprehensive soluti
 ### Getting Started:
 
 1. **Clone the Repository**:
-\`bash
-git clone https://github.com/jakubbares/Brander.git
-\`
+
+```git clone https://github.com/jakubbares/Brander.git```
 
 2. **Backend Setup**:
    - Traverse to the Django project directory:
-\`bash
-cd API
-\`
+```cd API```
    - Install the requisite packages:
-\`bash
-pip install -r requirements.txt
-\`
+```pip install -r requirements.txt```
+
    - Execute migrations:
-\`bash
-python manage.py migrate
-\`
+```python manage.py migrate```
 
 3. **Frontend Setup**:
    - Shift to the Next.js project directory:
-\`bash
-cd frontend
-\`
+```cd frontend```
    - Install the necessary packages:
-\`bash
-npm install
-\`
+```npm install```
    - Initiate the development server:
-\`bash
-next dev
-\`
+```next dev```
 
 ### Usage:
 
